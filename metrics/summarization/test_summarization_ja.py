@@ -9,6 +9,8 @@ from deepeval import assert_test
 from deepeval.metrics import GEval, SummarizationMetric
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 
+from metrics.model_config import MODEL
+
 
 # ---------------------------------------------------------------------------
 # メトリック定義
@@ -16,6 +18,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 
 要約メトリック_組込 = SummarizationMetric(
     threshold=0.7,
+    model=MODEL,
     assessment_questions=[
         "要約は元のテキストの主要なポイントを捉えていますか？",
         "要約は原文に対して事実の誤りがありませんか？",
@@ -35,6 +38,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
         LLMTestCaseParams.ACTUAL_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 要約_忠実性 = GEval(
@@ -49,6 +53,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
         LLMTestCaseParams.ACTUAL_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 要約_網羅性 = GEval(
@@ -63,6 +68,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
         LLMTestCaseParams.EXPECTED_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 要約_一貫性 = GEval(
@@ -76,6 +82,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
         LLMTestCaseParams.ACTUAL_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 

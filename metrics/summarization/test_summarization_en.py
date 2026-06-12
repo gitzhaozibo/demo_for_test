@@ -9,6 +9,8 @@ from deepeval import assert_test
 from deepeval.metrics import GEval, SummarizationMetric
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 
+from metrics.model_config import MODEL
+
 
 # ---------------------------------------------------------------------------
 # Metric definitions
@@ -16,6 +18,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 
 summarization_builtin = SummarizationMetric(
     threshold=0.7,
+    model=MODEL,
     assessment_questions=[
         "Does the summary capture the main points of the original text?",
         "Is the summary free from factual errors relative to the source?",
@@ -35,6 +38,7 @@ summarization_conciseness = GEval(
         LLMTestCaseParams.ACTUAL_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 summarization_faithfulness = GEval(
@@ -50,6 +54,7 @@ summarization_faithfulness = GEval(
         LLMTestCaseParams.ACTUAL_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 summarization_coverage = GEval(
@@ -65,6 +70,7 @@ summarization_coverage = GEval(
         LLMTestCaseParams.EXPECTED_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 summarization_coherence = GEval(
@@ -78,6 +84,7 @@ summarization_coherence = GEval(
         LLMTestCaseParams.ACTUAL_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 

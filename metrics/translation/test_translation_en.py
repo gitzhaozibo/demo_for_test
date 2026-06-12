@@ -9,6 +9,8 @@ from deepeval import assert_test
 from deepeval.metrics import GEval
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 
+from metrics.model_config import MODEL
+
 
 # ---------------------------------------------------------------------------
 # Metric definitions
@@ -27,6 +29,7 @@ translation_accuracy = GEval(
         LLMTestCaseParams.EXPECTED_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 translation_fluency = GEval(
@@ -40,6 +43,7 @@ translation_fluency = GEval(
         LLMTestCaseParams.ACTUAL_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 translation_consistency = GEval(
@@ -54,6 +58,7 @@ translation_consistency = GEval(
         LLMTestCaseParams.ACTUAL_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 

@@ -40,6 +40,27 @@ metrics/
 pip install -r requirements.txt
 ```
 
+### Azure OpenAI の設定
+
+本プロジェクトは社内Azure OpenAIを使用します。以下の手順で設定してください。
+
+1. `.env.example` をコピーして `.env` ファイルを作成します：
+
+```bash
+cp .env.example .env
+```
+
+2. `.env` ファイルに社内Azure OpenAIの接続情報を入力します：
+
+```
+AZURE_API_KEY=your-azure-openai-api-key
+AZURE_API_BASE=https://your-resource-name.openai.azure.com/
+AZURE_API_VERSION=2024-02-15-preview
+AZURE_DEPLOYMENT_NAME=your-deployment-name
+```
+
+> **⚠️ 重要**: `.env` ファイルはGitで管理されません（`.gitignore` に登録済み）。API KeyやEndpointをソースコードにハードコードしないでください。
+
 ## 実行方法
 
 ```bash
@@ -53,4 +74,4 @@ deepeval test run metrics/translation/
 deepeval test run metrics/summarization/
 ```
 
-> **注意**: deepevalの実行にはLLM APIキー（OpenAI等）の設定が必要です。
+> **注意**: 実行前に `.env` ファイルにAzure OpenAIの接続情報が設定されていることを確認してください。
