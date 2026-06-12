@@ -9,6 +9,8 @@ from deepeval import assert_test
 from deepeval.metrics import GEval
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 
+from metrics.model_config import MODEL
+
 
 # ---------------------------------------------------------------------------
 # メトリック定義
@@ -26,6 +28,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
         LLMTestCaseParams.EXPECTED_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 翻訳流暢性 = GEval(
@@ -38,6 +41,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
         LLMTestCaseParams.ACTUAL_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 翻訳一貫性 = GEval(
@@ -51,6 +55,7 @@ from deepeval.test_case import LLMTestCase, LLMTestCaseParams
         LLMTestCaseParams.ACTUAL_OUTPUT,
     ],
     threshold=0.7,
+    model=MODEL,
 )
 
 
