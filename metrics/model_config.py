@@ -51,41 +51,45 @@ class AzureOpenAILLM(DeepEvalBaseLLM):
     so it works with both public and private (VNet/private-endpoint) deployments.
     """
 
+    # Cost is not tracked for private endpoint deployments.
+    _COST_NOT_TRACKED = 0.0
+
     def __init__(self) -> None:
         self._api_key = os.environ["AZURE_API_KEY"]
         self._endpoint = os.environ["AZURE_API_BASE"]
         self._api_version = os.environ["AZURE_API_VERSION"]
         self._deployment = os.environ["AZURE_DEPLOYMENT_NAME"]
+        # Clients are created once and reused across calls.
+        self._client = AzureOpenAI(
+            api_key=self._api_key,
+            azure_endpoint=self._endpoint,
+            api_version=self._api_version,
+        )
+        self._async_client = AsyncAzureOpenAI(
+            api_key=self._api_key,
+            azure_endpoint=self._endpoint,
+            api_version=self._api_version,
+        )
 
     def get_model_name(self) -> str:
         return f"Azure OpenAI ({self._deployment})"
 
     def load_model(self) -> AzureOpenAI:
-        return AzureOpenAI(
-            api_key=self._api_key,
-            azure_endpoint=self._endpoint,
-            api_version=self._api_version,
-        )
+        return self._client
 
     def generate(self, prompt: str) -> Tuple[str, float]:
-        client = self.load_model()
-        response = client.chat.completions.create(
+        response = self._client.chat.completions.create(
             model=self._deployment,
             messages=[{"role": "user", "content": prompt}],
         )
-        return response.choices[0].message.content, 0.0
+        return response.choices[0].message.content, self._COST_NOT_TRACKED
 
     async def a_generate(self, prompt: str) -> Tuple[str, float]:
-        async_client = AsyncAzureOpenAI(
-            api_key=self._api_key,
-            azure_endpoint=self._endpoint,
-            api_version=self._api_version,
-        )
-        response = await async_client.chat.completions.create(
+        response = await self._async_client.chat.completions.create(
             model=self._deployment,
             messages=[{"role": "user", "content": prompt}],
         )
-        return response.choices[0].message.content, 0.0
+        return response.choices[0].message.content, self._COST_NOT_TRACKED
 
 
 # Shared model instance used by all metrics.
